@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginComponent } from './login/login.component';
+import { SignupRoutingModule } from './signup-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
+
 
 @NgModule({
+  declarations: [SignupComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,8 +21,7 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    LoginRoutingModule
-  ],
-  declarations: [LoginComponent]
+    SignupRoutingModule
+  ]
 })
-export class LoginModule {}
+export class SignupModule { }

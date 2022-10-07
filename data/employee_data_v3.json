@@ -1,0 +1,11 @@
+{
+  "SignupUsers": [
+    {
+      "name": "12334",
+      "mobileNo": 9843775232,
+      "email": "mani@123",
+      "password": "12345678",
+      "id": 1
+    }
+  ]
+}
