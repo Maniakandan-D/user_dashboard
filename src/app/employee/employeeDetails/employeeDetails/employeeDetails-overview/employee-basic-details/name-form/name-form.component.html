@@ -1,0 +1,21 @@
+<form [formGroup]="nameForm"  (ngSubmit)="nameForm.valid && onSubmit()" #localForm>
+    <mat-card-content class="">
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="Birth Date" [matDatepicker]="picker" (focus)="picker.open()"  formControlName="bithday" [class.is-invalid]="localForm.submitted && nameForm.get('bithday')?.invalid">
+                <mat-error class="invalid-feedback">Date is required</mat-error>
+            </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker>
+        </p>
+        <p>
+            <mat-radio-group id="radio">
+            <mat-radio-button value="1">Father </mat-radio-button>
+            <mat-radio-button value="2">Husband </mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field>
+            <input matInput placeholder="name" formControlName ="Fathername" [class.is-invalid]="localForm.submitted && nameForm.get('Fathername')?.invalid">
+            <mat-error class="invalid-feedback">Father or Husband name is required</mat-error>
+            </mat-form-field>
+        </p>
+    </mat-card-content>
+</form>
