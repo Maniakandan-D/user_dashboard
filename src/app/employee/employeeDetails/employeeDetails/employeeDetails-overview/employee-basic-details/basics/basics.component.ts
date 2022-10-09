@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || isSubmitted) //|| control.touched 
+    );
+  }
+}
 
 @Component({
   selector: 'app-basics',
@@ -7,20 +23,26 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./basics.component.scss']
 })
 export class BasicsComponent implements OnInit {
-  basicsForm: FormGroup;
+  matcher = new MyErrorStateMatcher();
+
+  form = new FormGroup({
+    firstName : new FormControl('', [
+      Validators.required
+    ]),
+    lastName : new FormControl('', [
+      Validators.required
+    ]),
+    nameAadhar : new FormControl('', [
+      Validators.required
+    ]),
+  });
   
-  constructor(private _formBuilder: FormBuilder) { }
+  
+  constructor() { }
 
   ngOnInit(): void {
-    this.basicsForm = this._formBuilder.group({
-      firstName : ['', Validators.required],
-      lastName: ['', Validators.required],
-      nameAadhar: ['', Validators.required],
-  })
-}
-  onSubmit(){
-    if (this.basicsForm.valid) {
-      console.log('Employee form data :: ', this.basicsForm.value);
-    }
+  }
+  save(){
+    console.log(this.form)
   }
 }

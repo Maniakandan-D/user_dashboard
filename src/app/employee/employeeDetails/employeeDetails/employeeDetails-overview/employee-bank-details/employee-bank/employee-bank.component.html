@@ -1,23 +1,24 @@
-<form [formGroup]="bankForm"  (ngSubmit)="bankForm.valid && onSubmit()" #localForm>
-        <mat-card-header>
-          <mat-card-title>Bank Details</mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="">
-          <p>
-            <mat-form-field>
-              <input matInput placeholder="Bank Name" formControlName="bankName" [class.is-invalid]="localForm.submitted && bankForm.get('bankName')?.invalid">
-              <mat-error class="invalid-feedback">Bank name is required </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Bank A/c No" formControlName="bankNo" [class.is-invalid]="localForm.submitted && bankForm.get('bankNo')?.invalid">
-              <mat-error class="invalid-feedback">Bank a/c no is required </mat-error>
-            </mat-form-field>
-          </p>
-          <p>
-            <mat-form-field>
-              <input matInput placeholder="Bank Address" formControlName="bankAddress" [class.is-invalid]="localForm.submitted && bankForm.get('bankAddress')?.invalid">
-              <mat-error class="invalid-feedback">Bank address is required </mat-error>
-            </mat-form-field>
-          </p>  
-        </mat-card-content>
+<form>
+    <mat-card-header>
+      <mat-card-title>Bank Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="">
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Bank Name" [formControl]="bankName" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="bankName.hasError('required')">Bank name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Bank A/c No" [formControl]="bankNo" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="bankNo.hasError('required')">Bank a/c no is required</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Bank Address" [formControl]="bankAddress" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="bankAddress.hasError('required')">Bank address is required</mat-error>
+        </mat-form-field>
+      </p>  
+    </mat-card-content>
+    <button type="submit">save</button>
 </form>

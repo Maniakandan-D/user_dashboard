@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || isSubmitted) //|| control.touched 
+    );
+  }
+}
 
 @Component({
   selector: 'app-employee-bank',
@@ -7,19 +23,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./employee-bank.component.scss']
 })
 export class EmployeeBankComponent implements OnInit {
-  bankForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder) { }
+  matcher = new MyErrorStateMatcher();
+  
+  bankName = new FormControl('', [
+    Validators.required
+  ]);
+  bankNo = new FormControl('', [
+    Validators.required
+  ]);
+  bankAddress = new FormControl('', [
+    Validators.required
+  ]);
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.bankForm = this._formBuilder.group({
-      bankName:['', Validators.required],
-      bankNo: ['', Validators.required],
-      bankAddress:['', Validators.required],
-    })
+
   }
-  onSubmit(){
-    if (this.bankForm.valid) {
-      console.log('Bank form data :: ', this.bankForm.value);
-    }
-  }
+  
 }

@@ -4,7 +4,7 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <ng-template matStepLabel>General Information</ng-template>
-    <form  (ngSubmit)="onSubmit()" #localForm>
+    <form>
       <app-employee-basic-details></app-employee-basic-details>
       <app-employee-communication-details></app-employee-communication-details>
       <app-employee-bank-details></app-employee-bank-details>
@@ -129,7 +129,7 @@
   </mat-step>
 
   <mat-step [stepControl]="thirdFormGroup">
-    <ng-template matStepLabel>EMPLOYEE INFORMATION</ng-template>
+    <ng-template matStepLabel>Employee Information</ng-template>
     <form [formGroup]="thirdFormGroup">
       <div>
         <div>
@@ -184,7 +184,30 @@
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
-  </mat-step>    
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Review</ng-template>
+    <div>
+      <label for="reference">Reference</label>
+    </div>
+    <div>
+      <label for="reference">Reference</label>
+    </div>
+    <div>
+      <label for="reference">Reference</label>
+    </div>
+    <div>
+      <label for="reference">Reference</label>
+    </div>
+    <div>
+      <label for="reference">Reference</label>
+    </div>
+    
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>   
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     You are now done.
