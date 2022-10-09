@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || isSubmitted) //|| control.touched 
+    );
+  }
+}
 
 @Component({
   selector: 'app-name-form',
@@ -7,18 +23,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./name-form.component.scss']
 })
 export class NameFormComponent implements OnInit {
-  nameForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder) { }
+  matcher = new MyErrorStateMatcher();
+  
+  Fathername = new FormControl('', [
+    Validators.required
+  ]);
+  bithday = new FormControl('', [
+    Validators.required
+  ]);
+  constructor() { }
 
   ngOnInit(): void {
-    this.nameForm = this._formBuilder.group({
-      Fathername: ['', Validators.required],
-      bithday:['', Validators.required]
-  })
-}
-  onSubmit(){
-    if (this.nameForm.valid) {
-      console.log('Employee form data :: ', this.nameForm.value);
-    }
+    
   }
+
 }

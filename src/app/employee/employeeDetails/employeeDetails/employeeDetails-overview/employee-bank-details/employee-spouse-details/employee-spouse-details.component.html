@@ -1,31 +1,32 @@
 
-    <form  [formGroup]="spouseForm"  (ngSubmit)="spouseForm.valid && onSubmit()" #localForm>
-        <mat-card-header>
-          <mat-card-title>Spouse’s Details</mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="">
-          <p>
-            <label>Maritial Status: </label>
-            <mat-radio-group formControlName="maritialStatus" [class.is-invalid]="localForm.submitted && spouseForm.get('maritialStatus')?.invalid">
-              <mat-radio-button value="yes">Yes</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
-          </p>
-          <p>
-            <mat-form-field>
-              <input matInput placeholder="Spouse’s Name" formControlName ="spouseName" [class.is-invalid]="localForm.submitted && spouseForm.get('spouseName')?.invalid">
-              <mat-error class="invalid-feedback">Spouse’s name is required </mat-error>
-            </mat-form-field>
-          </p>
-          <p>
-            <mat-form-field>
-              <input matInput placeholder="Spouse’s Employer" formControlName ="spouseEmployer" [class.is-invalid]="localForm.submitted && spouseForm.get('spouseEmployer')?.invalid">
-              <mat-error class="invalid-feedback">Spouse’s employer name is required </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Spouse’s Work Phone" formControlName="spousePhone" [class.is-invalid]="localForm.submitted && spouseForm.get('spousePhone')?.invalid">
-              <mat-error class="invalid-feedback">Spouse’s work phone number is required </mat-error>
-            </mat-form-field>
-          </p>
-        </mat-card-content>
-    </form>
+<form>
+    <mat-card-header>
+      <mat-card-title>Spouse’s Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="">
+      <p>
+        <label>Maritial Status: </label>
+        <mat-radio-group [formControl]="maritialStatus">
+          <mat-radio-button value="yes">Yes</mat-radio-button>
+          <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+      </p>
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Spouse’s Name" [formControl]="spouseName" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="spouseName.hasError('required')">Spouse’s name is required</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Spouse’s Employer" [formControl]="spouseEmployer" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="spouseEmployer.hasError('required')">Spouse’s employer name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Spouse’s Work Phone" [formControl]="spousePhone" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="spousePhone.hasError('required')">Spouse’s work phone number is required</mat-error>
+        </mat-form-field>
+      </p>
+    </mat-card-content>
+    <button type="submit">save</button>
+</form>

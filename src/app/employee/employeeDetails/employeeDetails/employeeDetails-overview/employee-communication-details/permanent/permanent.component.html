@@ -1,4 +1,4 @@
-<form [formGroup]="permanentForm"  (ngSubmit)="permanentForm.valid && onSubmit()" #localForm>
+<form>
     <mat-card-content class="">
         <p>
         <mat-checkbox [formControl]="disableSelect">correspondence address same as permanent address</mat-checkbox>
@@ -28,8 +28,10 @@
                 <input matInput placeholder="Home Phone">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Mobile Phone" formControlName ="mobilePhone" [class.is-invalid]="localForm.submitted && permanentForm.get('mobilePhone')?.invalid">
-                <mat-error class="invalid-feedback">Mobile number is required</mat-error>
+                <input matInput placeholder="Mobile Phone" [formControl] ="mobilePhone"  [errorStateMatcher]="matcher">
+                <mat-error *ngIf="mobilePhone.hasError('required')">
+                    Mobile number is required
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
@@ -42,4 +44,5 @@
             </mat-form-field>
         </p>
     </mat-card-content>
+    <button type="submit">save</button>
 </form>

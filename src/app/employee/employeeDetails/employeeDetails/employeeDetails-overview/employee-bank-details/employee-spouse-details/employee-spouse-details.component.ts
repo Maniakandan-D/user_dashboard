@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || isSubmitted) //|| control.touched 
+    );
+  }
+}
 
 @Component({
   selector: 'app-employee-spouse-details',
@@ -7,20 +23,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./employee-spouse-details.component.scss']
 })
 export class EmployeeSpouseDetailsComponent implements OnInit {
-  spouseForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder) { }
+  matcher = new MyErrorStateMatcher();
+  
+  maritialStatus = new FormControl('', [
+    Validators.required
+  ]);
+  spouseName = new FormControl('', [
+    Validators.required
+  ]);
+  spouseEmployer = new FormControl('', [
+    Validators.required
+  ]);
+  spousePhone = new FormControl('', [
+    Validators.required
+  ]);
+  constructor() { }
 
   ngOnInit(): void {
-    this.spouseForm = this._formBuilder.group({
-      maritialStatus:['', Validators.required],
-      spouseName : ['', Validators.required],
-      spouseEmployer: ['', Validators.required],
-      spousePhone: ['', Validators.required],
-  })
-}
-onSubmit(){
-  if (this.spouseForm.valid) {
-    console.log('Spouse form data :: ', this.spouseForm.value);
+    
   }
-}
+
 }

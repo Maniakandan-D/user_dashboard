@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || isSubmitted) //|| control.touched 
+    );
+  }
+}
 
 @Component({
   selector: 'app-nominee',
@@ -7,18 +23,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./nominee.component.scss']
 })
 export class NomineeComponent implements OnInit {
-  nomineeForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder) { }
+  matcher = new MyErrorStateMatcher();
+  
+  dependents = new FormControl('', [
+    Validators.required
+  ]);
+  nominee = new FormControl('', [
+    Validators.required
+  ]);
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.nomineeForm = this._formBuilder.group({
-      dependents:['', Validators.required],
-      nominee: ['', Validators.required],
-    })
+  
   }
-  onSubmit(){
-    if (this.nomineeForm.valid) {
-      console.log('Nominee form data :: ', this.nomineeForm.value);
-    }
-  }
+  
 }

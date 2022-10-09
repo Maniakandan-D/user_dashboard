@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -12,7 +12,7 @@ class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(
       control &&
       control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
+      (control.dirty || isSubmitted)
     );
   }
 }
@@ -23,30 +23,22 @@ class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./permanent.component.scss']
 })
 export class PermanentComponent implements OnInit {
-  permanentForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder) { }
+  matcher = new MyErrorStateMatcher();
 
-  ngOnInit(): void {
-    this.permanentForm = this._formBuilder.group({
-      streetAddress: ['', Validators.required],
-      apartmentUnit: ['', Validators.required],
-      city :  ['', Validators.required],
-      state : ['', Validators.required],
-      pincode : ['', Validators.required],
-      mobilePhone: ['', Validators.required, Validators.minLength(10)],
-  })
-}
-  onSubmit(){
-    if (this.permanentForm.valid) {
-      console.log('correspondence form data :: ', this.permanentForm.value);
-    }
-  }
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email
   ]);
   
-  matcher = new MyErrorStateMatcher();
+  mobilePhone = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
+  constructor() { }
+
+  ngOnInit(): void {
+   
+  }
 
   disableSelect = new FormControl(false);
 

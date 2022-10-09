@@ -1,21 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-employeeDetails-overview',
@@ -28,9 +12,7 @@ export class EmployeeDetailsOverviewComponent implements OnInit {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
 
-  maritialStatus= new FormControl('', [
-    Validators.required
-  ]);
+  
   submitted: boolean;
   
   constructor(private _formBuilder: FormBuilder) {}
